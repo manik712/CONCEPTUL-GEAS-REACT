@@ -11,10 +11,11 @@ function App() {
   return (
     <>
       
-      <h1 className='text-2xl text-white'>Vite + React</h1>
+      <h1 className='text-2xl text-white mb-5'>Vite + React</h1>
       <Home></Home>
     </>
   )
 }
 
 export default App
+

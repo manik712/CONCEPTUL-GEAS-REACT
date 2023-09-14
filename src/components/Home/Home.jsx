@@ -1,10 +1,14 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import Cart from '../Cart/Cart';
 
 const Home = () => {
  const [allActors,setAllactors] = useState([]);
- const [selectActors ,setSelectActors] = useState([])
+ const [selectActors ,setSelectActors] = useState([]);
+ const [remaning , setRemaning] = useState(0);
+ const [totalCost , setTotalCost] = useState(0)
+
 
   useEffect(()=>{
     fetch('data.json')
@@ -13,9 +17,33 @@ const Home = () => {
   },[]);
 
 const handleSelectActor = (actor) =>{
-  setSelectActors([...selectActors,actor])
+const isExit = selectActors.find((item)=>item.id==actor.id);
+// console.log(isExit);
+
+let count = actor.salary
+if(isExit){
+return  alert('already booked')
+}else{
+
+selectActors.forEach((item) => {
+    count = count + item.salary;
+});
+
+// console.log(count);
+const totalRemmaning = 20000 - count;
+if(count > 20000){
+  alert('not enough money')
+}else{
+  setTotalCost(count);
+  setRemaning(totalRemmaning);
+    setSelectActors([...selectActors,actor])
 }
-console.log(selectActors);
+
+}
+
+  
+}
+// console.log(selectActors);
 
   return (
    <div>
@@ -52,7 +80,7 @@ console.log(selectActors);
       </div>
  
      <div className='text-white w-3/12'>
-        <p >cart</p>
+        <Cart  totalCost={totalCost} remaning={remaning}  selectActors={selectActors} ></Cart>
      </div>
  
      </div>
@@ -61,3 +89,4 @@ console.log(selectActors);
 };
 
 export default Home;
+
